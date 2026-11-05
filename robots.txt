@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /preview
+
+# Ativado no build a partir de VITE_API_URL. Veja o README.
+#SGS# Sitemap: __SGS_ORIGEM__/api/site/v1/sitemap.xml

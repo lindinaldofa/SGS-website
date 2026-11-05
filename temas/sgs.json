@@ -1,0 +1,15 @@
+{
+  "cores": {
+    "primaria": "#0f4c6e",
+    "secundaria": "#0b2a45",
+    "neutra": "slate"
+  },
+  "logo": {
+    "principal": "/temas/sgs/logo.png",
+    "altura": 60
+  },
+  "cabecalho": {
+    "estilo": "claro",
+    "barraTopo": true
+  }
+}

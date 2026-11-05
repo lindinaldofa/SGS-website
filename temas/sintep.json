@@ -1,0 +1,15 @@
+{
+  "cores": {
+    "primaria": "#ed2d30",
+    "secundaria": "#2f2f2f",
+    "neutra": "neutral"
+  },
+  "logo": {
+    "principal": "/temas/sintep/logo.png",
+    "altura": 60
+  },
+  "cabecalho": {
+    "estilo": "claro",
+    "barraTopo": true
+  }
+}

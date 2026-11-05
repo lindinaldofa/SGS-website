@@ -1,0 +1,31 @@
+# Fallback da SPA para Apache (hospedagem compartilhada).
+# Arquivos e pastas existentes são servidos normalmente; o resto cai no index.html.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Robôs de redes sociais não executam JavaScript: recebem as metatags pelo SGS.
+    # As linhas abaixo são ativadas no build a partir de VITE_API_URL. Veja o README.
+    # O redirecionamento funciona em qualquer hospedagem. Para o robô não ver o endereço do SGS,
+    # troque [R=302,L] por [P,L]: exige mod_proxy_http e SSLProxyEngine ligado no servidor, o que
+    # não pode ser feito neste arquivo. Sem isso, o robô recebe erro 500.
+    #SGS# RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|WhatsApp|Twitterbot|TelegramBot|LinkedInBot) [NC]
+    #SGS# RewriteCond %{REQUEST_URI} !^/noticias/categoria$
+    #SGS# RewriteRule ^(noticias|paginas|agenda)/([^/]+)$ __SGS_ORIGEM__/compartilhar/$1/$2 [R=302,L]
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# Os arquivos de /assets têm hash no nome e podem ficar em cache por muito tempo.
+# O index.html e o tema.json precisam ser revalidados, para que mudanças apareçam logo.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html|json)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    <If "%{REQUEST_URI} =~ m#^/assets/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+</IfModule>
